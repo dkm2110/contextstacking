@@ -82,7 +82,11 @@ under the License.
     <Compile Include="Functional\Bridge\TestSimpleContext.cs" />
     <Compile Include="Functional\Bridge\TestSimpleEventHandlers.cs" />
     <Compile Include="Functional\Bridge\TestSuspendTask.cs" />
+    <Compile Include="Functional\ContextStacking\ContextInput.cs" />
+    <Compile Include="Functional\ContextStacking\ContextStart.cs" />
     <Compile Include="Functional\Driver\DriverTestStartHandler.cs" />
+    <Compile Include="Functional\ContextStacking\ContextStackingDriver.cs" />
+    <Compile Include="Functional\ContextStacking\TestContextStacking.cs" />
     <Compile Include="Functional\RuntimeName\EvaluatorRequestingDriver.cs" />
     <Compile Include="Functional\Driver\TestDriver.cs" />
     <Compile Include="Functional\Messaging\MessageDriver.cs" />
