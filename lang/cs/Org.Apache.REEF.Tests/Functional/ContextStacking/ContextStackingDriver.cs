@@ -40,7 +40,7 @@ namespace Org.Apache.REEF.Tests.Functional.ContextStacking
     public class ContextStackingDriver :
         IObserver<IAllocatedEvaluator>, 
         IObserver<IActiveContext>, 
-        IObserver<IDriverStarted>
+        IObserver<IDriverStarted>, IObserver<IClosedContext>
     {
         public const int NumberOfEvaluator = 1;
         private static readonly Logger Logger = Logger.GetLogger(typeof(ContextStackingDriver));
@@ -81,12 +81,26 @@ namespace Org.Apache.REEF.Tests.Functional.ContextStacking
                 if (context.Id.Equals("Stage2"))
                 {
                     Logger.Log(Level.Info, "Activated both contexts. Exiting");
+                    Logger.Log(Level.Info, string.Format("Disposing context: {0}", context.Id));
                     context.Dispose();
                 }
                 else
                 {
                     throw new Exception("Invalid context ID");
                 }
+            }
+        }
+
+        public void OnNext(IClosedContext context)
+        {
+            if (context.ParentContext != null)
+            {
+                Logger.Log(Level.Info, string.Format("Disposing context: {0}", context.ParentContext.Id));
+                context.ParentContext.Dispose();
+            }
+            else
+            {
+                Logger.Log(Level.Info, "Closed all contexts");
             }
         }
 

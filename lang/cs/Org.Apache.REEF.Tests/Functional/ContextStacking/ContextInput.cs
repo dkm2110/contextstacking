@@ -25,7 +25,7 @@ namespace Org.Apache.REEF.Tests.Functional.ContextStacking
             Logger.Log(Level.Info, string.Format("Entering context input constructor with counter {0}", s_staticCounter));
             if (s_staticCounter == 2)
             {
-                throw new Exception("Entered the constructor twice");
+                Logger.Log(Level.Info, "Entered the context input constructor twice");
             }
         }
 

@@ -52,7 +52,7 @@ namespace Org.Apache.REEF.Tests.Functional.ContextStacking
             string testFolder = DefaultRuntimeFolder + Guid.NewGuid();
             CleanUp(testFolder);
             TestRun(DriverConfigurations(), typeof(ContextStackingDriver), 1, "simpleHandler", "local", testFolder);
-            ValidateSuccessForLocalRuntime(1, testFolder: testFolder);
+            ValidateSuccessForLocalRuntime(2, testFolder: testFolder);
 
             var messages = new List<string>();
             messages.Add("Activated both contexts. Exiting");
@@ -60,7 +60,7 @@ namespace Org.Apache.REEF.Tests.Functional.ContextStacking
 
             var messages2 = new List<string>();
             messages.Add("Entering context input constructor with counter 1");
-            messages.Add("Entering context start constructor with counter 1");
+            messages.Add("Entering context start constructor with counter 2");
             ValidateMessageSuccessfullyLogged(messages2, "Node-*", EvaluatorStdout, testFolder, 0);
 
             CleanUp(testFolder);
@@ -73,6 +73,7 @@ namespace Org.Apache.REEF.Tests.Functional.ContextStacking
             .Set(DriverConfiguration.OnEvaluatorAllocated, GenericType<ContextStackingDriver>.Class)
             .Set(DriverConfiguration.OnContextActive, GenericType<ContextStackingDriver>.Class)
             .Set(DriverConfiguration.CustomTraceListeners, GenericType<DefaultCustomTraceListener>.Class)
+            .Set(DriverConfiguration.OnContextClosed, GenericType<ContextStackingDriver>.Class)
             .Set(DriverConfiguration.CustomTraceLevel, Level.Info.ToString())
             .Build();
 
